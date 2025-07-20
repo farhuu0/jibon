@@ -48,7 +48,7 @@ module.exports = {
       roleText1: "👑 Group Admins",
       roleText2: "⚡ Bot Admins",
       totalCommands: "📊 Total Commands: {total}\n"
-                  + "xnil"
+                  + "𝙵𝙰𝚁𝙷𝙰𝙽 𝙱𝙱𝚉"
     }
   },
 
