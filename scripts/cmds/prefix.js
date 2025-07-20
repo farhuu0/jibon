@@ -96,7 +96,7 @@ module.exports = {
 			const [datePart, timePart] = dateTime.split(", ");
 
 			const infoBox = `
-╔═════ OBITO CHATBOT ════╗
+╔═════ FARHAN CHATBOT ════╗
 🌐 System Prefix  : ${systemPrefix.padEnd(10)}
 💬 Group Prefix   : ${groupPrefix.padEnd(10)} 
 🕒 Time           : ${timePart.padEnd(10)} 
