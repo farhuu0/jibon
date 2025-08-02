@@ -103,7 +103,7 @@ module.exports = {
 📅 Date           : ${datePart.padEnd(10)}
 ╚══════════════════╝`;
 
-			const prefixImage = "";
+			const prefixImage = "https://files.catbox.moe/ayc50s.jpg";
 
 			return message.reply({
 				body: infoBox,
