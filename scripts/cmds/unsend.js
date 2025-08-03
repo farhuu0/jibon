@@ -1,7 +1,7 @@
 module.exports = {
 	config: {
 		name: "unsend",
-		aliases: "un",
+		aliases: ["un", "u", "r"],
 		version: "1.2",
 		author: "NTKhang",
 		countDown: 5,
