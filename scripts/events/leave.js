@@ -1,86 +1,90 @@
-const { getTime, drive } = global.utils;
+const axios = require("axios");
+const { getTime } = global.utils;
 
 module.exports = {
-	config: {
-		name: "leave",
-		version: "1.4",
-		author: "NTKhang",
-		category: "events"
-	},
+  config: {
+    name: "leave",
+    version: "1.4",
+    author: "NTKhang",
+    category: "events"
+  },
 
-	langs: {
-		vi: {
-			session1: "sáng",
-			session2: "trưa",
-			session3: "chiều",
-			session4: "tối",
-			leaveType1: "tự rời",
-			leaveType2: "bị kick",
-			defaultLeaveMessage: "{userName} đã {type} khỏi nhóm"
-		},
-		en: {
-			session1: "morning",
-			session2: "noon",
-			session3: "afternoon",
-			session4: "evening",
-			leaveType1: "left",
-			leaveType2: "was kicked from",
-			defaultLeaveMessage: "{userName} {type} the group"
-		}
-	},
+  langs: {
+    vi: {
+      session1: "sáng",
+      session2: "trưa",
+      session3: "chiều",
+      session4: "tối",
+      leaveType1: "tự rời",
+      leaveType2: "bị kick",
+      defaultLeaveMessage: "{userName} đã {type} khỏi nhóm"
+    },
+    en: {
+      session1: "morning",
+      session2: "noon",
+      session3: "afternoon",
+      session4: "evening",
+      leaveType1: "left",
+      leaveType2: "was kicked from",
+      defaultLeaveMessage: "{userName} {type} the group"
+    }
+  },
 
-	onStart: async ({ threadsData, message, event, api, usersData, getLang }) => {
-		if (event.logMessageType == "log:unsubscribe")
-			return async function () {
-				const { threadID } = event;
-				const threadData = await threadsData.get(threadID);
-				if (!threadData.settings.sendLeaveMessage)
-					return;
-				const { leftParticipantFbId } = event.logMessageData;
-				if (leftParticipantFbId == api.getCurrentUserID())
-					return;
-				const hours = getTime("HH");
+  onStart: async ({ threadsData, message, event, api, usersData, getLang }) => {
+    if (event.logMessageType == "log:unsubscribe") {
+      return async function () {
+        const { threadID } = event;
+        const threadData = await threadsData.get(threadID);
+        if (!threadData.settings.sendLeaveMessage)
+          return;
 
-				const threadName = threadData.threadName;
-				const userName = await usersData.getName(leftParticipantFbId);
+        const { leftParticipantFbId } = event.logMessageData;
+        if (leftParticipantFbId == api.getCurrentUserID())
+          return;
 
-				let { leaveMessage = getLang("defaultLeaveMessage") } = threadData.data;
-				const form = {
-					mentions: leaveMessage.match(/\{userNameTag\}/g) ? [{
-						tag: userName,
-						id: leftParticipantFbId
-					}] : null
-				};
+        const hours = getTime("HH");
+        const threadName = threadData.threadName;
+        const userName = await usersData.getName(leftParticipantFbId);
 
-				leaveMessage = leaveMessage
-					.replace(/\{userName\}|\{userNameTag\}/g, userName)
-					.replace(/\{type\}/g, leftParticipantFbId == event.author ? getLang("leaveType1") : getLang("leaveType2"))
-					.replace(/\{threadName\}|\{boxName\}/g, threadName)
-					.replace(/\{time\}/g, hours)
-					.replace(/\{session\}/g, hours <= 10 ?
-						getLang("session1") :
-						hours <= 12 ?
-							getLang("session2") :
-							hours <= 18 ?
-								getLang("session3") :
-								getLang("session4")
-					);
+        let { leaveMessage = getLang("defaultLeaveMessage") } = threadData.data;
+        const form = {
+          mentions: leaveMessage.match(/\{userNameTag\}/g) ? [{
+            tag: userName,
+            id: leftParticipantFbId
+          }] : null
+        };
 
-				form.body = leaveMessage;
+        leaveMessage = leaveMessage
+          .replace(/\{userName\}|\{userNameTag\}/g, userName)
+          .replace(/\{type\}/g, leftParticipantFbId == event.author ? getLang("leaveType1") : getLang("leaveType2"))
+          .replace(/\{threadName\}|\{boxName\}/g, threadName)
+          .replace(/\{time\}/g, hours)
+          .replace(/\{session\}/g, hours <= 10 ?
+            getLang("session1") :
+            hours <= 12 ?
+              getLang("session2") :
+              hours <= 18 ?
+                getLang("session3") :
+                getLang("session4")
+          );
 
-				if (leaveMessage.includes("{userNameTag}")) {
-					form.mentions = [{
-						id: leftParticipantFbId,
-						tag: userName
-					}];
-				}
+        form.body = leaveMessage;
 
-				// Always attach your image
-				form.attachment = [
-					await drive.getFile("https://files.catbox.moe/wja9cl.jpg", "stream")
-				];
+        if (leaveMessage.includes("{userNameTag}")) {
+          form.mentions = [{
+            id: leftParticipantFbId,
+            tag: userName
+          }];
+        }
 
-				message.send(form);
-			};
-	}
+        // Always attach your image from URL
+        const imgUrl = "https://files.catbox.moe/wja9cl.jpg";
+        form.attachment = [
+          (await axios.get(imgUrl, { responseType: "stream" })).data
+        ];
+
+        message.send(form);
+      };
+    }
+  }
 };
