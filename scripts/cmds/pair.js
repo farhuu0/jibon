@@ -1,107 +1,85 @@
-const { loadImage, createCanvas } = require("canvas");
-const axios = require("axios");
-const fs = require("fs-extra");
+const { getStreamFromURL } = global.utils;
 
 module.exports = {
   config: {
     name: "pair",
-    aurthor:"xemon",
-     role: 0,
-    shortDescription: " ",
-    longDescription: "",
+    version: "1.7",
+    author: "MahMUD",
     category: "love",
-    guide: "{pn}"
+    guide: "{prefix}pair"
   },
-  onStart: async function ({ api, event, args, usersData, threadsData }) {
-    let pathImg = __dirname + "/tmp/background.png";
-    let pathAvt1 = __dirname + "/tmp/Avtmot.png";
-    let pathAvt2 = __dirname + "/tmp/Avthai.png";
 
-    var id1 = event.senderID;
-    var name1 = await usersData.getName(id1); // Replace with function that retrieves the name of the user
-    var ThreadInfo = await api.getThreadInfo(event.threadID);
-    var all = ThreadInfo.userInfo;
-    for (let c of all) {
-      if (c.id == id1) var gender1 = c.gender;
+  onStart: async function ({ event, threadsData, message, usersData, api }) {
+    const obfuscatedAuthor = String.fromCharCode(77, 97, 104, 77, 85, 68); 
+    if (module.exports.config.author !== obfuscatedAuthor) {
+      return api.sendMessage("You are not authorized to change the author name.\n", event.threadID, event.messageID);
     }
-    const botID = api.getCurrentUserID();
-    let ungvien = [];
-    if (gender1 == "FEMALE") {
-      for (let u of all) {
-        if (u.gender == "MALE") {
-          if (u.id !== id1 && u.id !== botID) ungvien.push(u.id);
-        }
-      }
-    } else if (gender1 == "MALE") {
-      for (let u of all) {
-        if (u.gender == "FEMALE") {
-          if (u.id !== id1 && u.id !== botID) ungvien.push(u.id);
-        }
-      }
-    } else {
-      for (let u of all) {
-        if (u.id !== id1 && u.id !== botID) ungvien.push(u.id);
-      }
+
+    const uidI = event.senderID;
+    const name1 = await usersData.getName(uidI);
+    const avatarUrl1 = await usersData.getAvatarUrl(uidI);
+    const threadData = await threadsData.get(event.threadID);
+
+    const senderInfo = threadData.members.find(mem => mem.userID == uidI);
+    const gender1 = senderInfo?.gender;
+
+    if (!gender1 || (gender1 !== "MALE" && gender1 !== "FEMALE")) {
+      return message.reply("❌ Couldn't determine your gender. Please update your profile.");
     }
-    var id2 = ungvien[Math.floor(Math.random() * ungvien.length)];
-    var name2 = await usersData.getName(id2); // Replace with function that retrieves the name of the user
-    var rd1 = Math.floor(Math.random() * 100) + 1;
-    var cc = ["0", "-1", "99,99", "-99", "-100", "101", "0,01"];
-    var rd2 = cc[Math.floor(Math.random() * cc.length)];
-    var djtme = [`${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd2}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`];
 
-    var tile = djtme[Math.floor(Math.random() * djtme.length)];
+    const oppositeGender = gender1 === "MALE" ? "FEMALE" : "MALE";
 
-    var background = [
-      "https://i.postimg.cc/5tXRQ46D/background3.png",
-    ];
-    var rd = background;
-    let getAvtmot = (
-      await axios.get(`https://graph.facebook.com/${id1}/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, {
-        responseType: "arraybuffer",
-      })
-    ).data;
-    fs.writeFileSync(pathAvt1, Buffer.from(getAvtmot, "utf-8"));
-    let getAvthai = (
-      await axios.get(`https://graph.facebook.com/${id2}/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, {
-        responseType: "arraybuffer",
-      })
-    ).data;
-    fs.writeFileSync(pathAvt2, Buffer.from(getAvthai, "utf-8"));
-
-    let getbackground = (
-      await axios.get(`${rd}`, {
-        responseType: "arraybuffer",
-      })
-    ).data;
-    fs.writeFileSync(pathImg, Buffer.from(getbackground, "utf-8"));
-
-    let baseImage = await loadImage(pathImg);
-    let baseAvt1 = await loadImage(pathAvt1);
-    let baseAvt2 = await loadImage(pathAvt2);
-    let canvas = createCanvas(baseImage.width, baseImage.height);
-    let ctx = canvas.getContext("2d");
-    ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(baseAvt1, 100, 150, 300, 300);
-    ctx.drawImage(baseAvt2, 900, 150, 300, 300);
-    const imageBuffer = canvas.toBuffer();
-    fs.writeFileSync(pathImg, imageBuffer);
-    fs.removeSync(pathAvt1);
-    fs.removeSync(pathAvt2);
-    return api.sendMessage(
-      {
-        body: `『💗』Congratulations ${name1}『💗』\n『❤️』Looks like your destiny brought you together with ${name2}『❤️』\n『🔗』Your link percentage is ${tile}%『🔗』`,
-        mentions: [
-          {
-            tag: `${name2}`,
-            id: id2,
-          },
-        ],
-        attachment: fs.createReadStream(pathImg),
-      },
-      event.threadID,
-      () => fs.unlinkSync(pathImg),
-      event.messageID
+    const candidates = threadData.members.filter(
+      member => member.gender === oppositeGender && member.inGroup && member.userID !== uidI
     );
-  },
+
+    if (candidates.length === 0) {
+      return message.reply(`❌ No ${oppositeGender.toLowerCase()} members found in this group.`);
+    }
+
+    const matched = candidates[Math.floor(Math.random() * candidates.length)];
+
+    const name2 = await usersData.getName(matched.userID);
+    const avatarUrl2 = await usersData.getAvatarUrl(matched.userID);
+
+    const lovePercent = Math.floor(Math.random() * 36) + 65;
+    const compatibility = Math.floor(Math.random() * 36) + 65;
+
+    function toBoldUnicode(name) {
+      const boldAlphabet = {
+        "a": "𝐚", "b": "𝐛", "c": "𝐜", "d": "𝐝", "e": "𝐞", "f": "𝐟", "g": "𝐠", "h": "𝐡", "i": "𝐢", "j": "𝐣",
+        "k": "𝐤", "l": "𝐥", "m": "𝐦", "n": "𝐧", "o": "𝐨", "p": "𝐩", "q": "𝐪", "r": "𝐫", "s": "𝐬", "t": "𝐭",
+        "u": "𝐮", "v": "𝐯", "w": "𝐰", "x": "𝐱", "y": "𝐲", "z": "𝐳", "A": "𝐀", "B": "𝐁", "C": "𝐂", "D": "𝐃",
+        "E": "𝐄", "F": "𝐅", "G": "𝐆", "H": "𝐇", "I": "𝐈", "J": "𝐉", "K": "𝐊", "L": "𝐋", "M": "𝐌", "N": "𝐍",
+        "O": "𝐎", "P": "𝐏", "Q": "𝐐", "R": "𝐑", "S": "𝐒", "T": "𝐓", "U": "𝐔", "V": "𝐕", "W": "𝐖", "X": "𝐗",
+        "Y": "𝐘", "Z": "𝐙", "0": "0", "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8",
+        "9": "9", " ": " ", "'": "'", ",": ",", ".": ".", "-": "-", "!": "!", "?": "?"
+      };
+      return name.split('').map(char => boldAlphabet[char] || char).join('');
+    }
+
+    const styledName1 = toBoldUnicode(name1);
+    const styledName2 = toBoldUnicode(name2);
+
+    const styledMessage = `
+💖✨ 𝗡𝗲𝘄 𝗣𝗮𝗶𝗿 𝗔𝗹𝗲𝗿𝘁! ✨💖
+
+🎉 𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞, 𝐥𝐞𝐭'𝐬 𝐜𝐨𝐧𝐠𝐫𝐚𝐭𝐮𝐥𝐚𝐭𝐞 𝐨𝐮𝐫 𝐥𝐨𝐯𝐞𝐥𝐲 𝐧𝐞𝐰 𝐜𝐨𝐮𝐩𝐥𝐞
+
+• ${styledName1}  
+• ${styledName2}
+
+❤  𝐋𝐨𝐯𝐞 𝐏𝐞𝐫𝐜𝐞𝐧𝐭𝐚𝐠𝐞: ${lovePercent}%  
+🌟 𝐂𝐨𝐦𝐩𝐚𝐭𝐢𝐛𝐢𝐥𝐢𝐭𝐲: ${compatibility}%
+
+💍 𝐌𝐚𝐲 𝐲𝐨𝐮𝐫 𝐥𝐨𝐯𝐞 𝐛𝐥𝐨𝐨𝐦 𝐟𝐨𝐫𝐞𝐯𝐞𝐫`;
+
+    return message.reply({
+      body: styledMessage,
+      attachment: [
+        await getStreamFromURL(avatarUrl1),
+        await getStreamFromURL(avatarUrl2)
+      ]
+    });
+  }
 };
