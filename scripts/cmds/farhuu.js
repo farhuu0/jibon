@@ -1,5 +1,5 @@
 module.exports.config = {
-  name: "xass",
+  name: "farhu",
   version: 0.2,
   author: "BaYjid",
   category: "npx",
@@ -14,7 +14,7 @@ module.exports.onChat = async ({ api, event, args }) => {
   try {
     const msg = event.body.toLowerCase();
 
-    if (msg === "xoss" || msg === "farhu") {
+    if (msg === "xoss" || msg === "farhuu") {
       api.sendMessage(
         {
           body: 
@@ -25,7 +25,7 @@ module.exports.onChat = async ({ api, event, args }) => {
 > Owner: -𝐗𝐨𝐬𝐬 - 𝐅𝐚𝐫𝐇𝐚𝐧•-🕷️🕸️🫀 (Etx)
 > 𝐗𝐎𝐒𝐒 𝐁𝐎𝐓__/:;)🤍
 🦈🫀`,
-          attachment: await global.utils.getStreamFromURL("http://160.191.129.54:5000/cdn/gTPVJrZLd.jpg"),
+          attachment: await global.utils.getStreamFromURL("https://litter.catbox.moe/0zipcrkx7b3aafi4.mp4"),
         },
         event.threadID,
         event.messageID
