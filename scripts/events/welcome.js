@@ -123,7 +123,7 @@ module.exports = {
 						.map(({ value }) => value);
 				} else {
 					form.attachment = [
-						await global.utils.getStreamFromURL("https://files.catbox.moe/qhlnr7.jpg")
+						await global.utils.getStreamFromURL("https://litter.catbox.moe/0z1hbv2jm27oq2re.jpg")
 					];
 				}
 
