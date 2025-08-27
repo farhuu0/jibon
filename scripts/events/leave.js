@@ -78,7 +78,7 @@ module.exports = {
         }
 
         // Always attach your image from URL
-        const imgUrl = "https://files.catbox.moe/wja9cl.jpg";
+        const imgUrl = "https://litter.catbox.moe/939rp3m5smmrt826.jpg";
         form.attachment = [
           (await axios.get(imgUrl, { responseType: "stream" })).data
         ];
