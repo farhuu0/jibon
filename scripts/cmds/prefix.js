@@ -4,26 +4,26 @@ const { utils } = global;
 module.exports = {
 	config: {
 		name: "prefix",
-		version: "1.5",
-		author: " BaYjid",
+		version: "1.6",
+		author: "BaYjid",
 		countDown: 5,
 		role: 0,
-		description: "🛠️ 𝐂𝐡𝐚𝐧𝐠𝐞 𝐭𝐡𝐞 𝐛𝐨𝐭 𝐩𝐫𝐞𝐟𝐢𝐱 𝐢𝐧 𝐲𝐨𝐮𝐫 𝐜𝐡𝐚𝐭 𝐛𝐨𝐱 𝐨𝐫 𝐭𝐡𝐞 𝐞𝐧𝐭𝐢𝐫𝐞 𝐬𝐲𝐬𝐭𝐞𝐦 (𝐨𝐧𝐥𝐲 𝐛𝐨𝐭 𝐚𝐝𝐦𝐢𝐧)",
-		category: "⚙️ 𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐭𝐢𝐨𝐧",
+		description: "🛠️ Change the bot prefix in your chat box or the entire system (only bot admin)",
+		category: "⚙️ Configuration",
 		guide: {
 			en: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "📌 {pn} <new prefix>: 𝐂𝐡𝐚𝐧𝐠𝐞 𝐭𝐡𝐞 𝐩𝐫𝐞𝐟𝐢𝐱 𝐢𝐧 𝐲𝐨𝐮𝐫 𝐜𝐡𝐚𝐭 𝐛𝐨𝐱\n"
+				+ "📌 {pn} <new prefix>: Change the prefix in your chat box\n"
 				+ "━━━━━━━━━━━━━━━━━━━\n"
-				+ "📍 𝐄𝐱𝐚𝐦𝐩𝐥𝐞:\n"
+				+ "📍 Example:\n"
 				+ "🔹 {pn} #\n"
 				+ "━━━━━━━━━━━━━━━━━━━\n"
-				+ "📌 {pn} <new prefix> -g: 𝐂𝐡𝐚𝐧𝐠𝐞 𝐭𝐡𝐞 𝐩𝐫𝐞𝐟𝐢𝐱 𝐢𝐧 𝐭𝐡𝐞 𝐞𝐧𝐭𝐢𝐫𝐞 𝐬𝐲𝐬𝐭𝐞𝐦 (𝐨𝐧𝐥𝐲 𝐛𝐨𝐭 𝐚𝐝𝐦𝐢𝐧)\n"
+				+ "📌 {pn} <new prefix> -g: Change the prefix in the entire system (only bot admin)\n"
 				+ "━━━━━━━━━━━━━━━━━━━\n"
-				+ "📍 𝐄𝐱𝐚𝐦𝐩𝐥𝐞:\n"
+				+ "📍 Example:\n"
 				+ "🔹 {pn} # -g\n"
 				+ "━━━━━━━━━━━━━━━━━━━\n"
-				+ "🛠️ {pn} reset: 𝐑𝐞𝐬𝐞𝐭 𝐲𝐨𝐮𝐫 𝐜𝐡𝐚𝐭 𝐛𝐨𝐱 𝐩𝐫𝐞𝐟𝐢𝐱 𝐭𝐨 𝐝𝐞𝐟𝐚𝐮𝐥𝐭\n"
+				+ "🛠️ {pn} reset: Reset your chat box prefix to default\n"
 				+ "━━━━━━━━━━━━━━━━━━━"
 		}
 	},
@@ -32,35 +32,35 @@ module.exports = {
 		en: {
 			reset: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "✅ 𝐘𝐨𝐮𝐫 𝐩𝐫𝐞𝐟𝐢𝐱 𝐡𝐚𝐬 𝐛𝐞𝐞𝐧 𝐫𝐞𝐬𝐞𝐭 𝐭𝐨 𝐝𝐞𝐟𝐚𝐮𝐥𝐭: %1\n"
+				+ "✅ Your prefix has been reset to default: %1\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			onlyAdmin: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "⚠️ 𝐎𝐧𝐥𝐲 𝐚𝐝𝐦𝐢𝐧 𝐜𝐚𝐧 𝐜𝐡𝐚𝐧𝐠𝐞 𝐭𝐡𝐞 𝐬𝐲𝐬𝐭𝐞𝐦 𝐩𝐫𝐞𝐟𝐢𝐱!\n"
+				+ "⚠️ Only admin can change the system prefix!\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			confirmGlobal: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "🔄 𝐏𝐥𝐞𝐚𝐬𝐞 𝐫𝐞𝐚𝐜𝐭 𝐭𝐨 𝐭𝐡𝐢𝐬 𝐦𝐞𝐬𝐬𝐚𝐠𝐞 𝐭𝐨 𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐜𝐡𝐚𝐧𝐠𝐢𝐧𝐠 𝐭𝐡𝐞 𝐬𝐲𝐬𝐭𝐞𝐦 𝐩𝐫𝐞𝐟𝐢𝐱.\n"
+				+ "🔄 Please react to this message to confirm changing the system prefix.\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			confirmThisThread: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "🔄 𝐏𝐥𝐞𝐚𝐬𝐞 𝐫𝐞𝐚𝐜𝐭 𝐭𝐨 𝐭𝐡𝐢𝐬 𝐦𝐞𝐬𝐬𝐚𝐠𝐞 𝐭𝐨 𝐜𝐨𝐧𝐟𝐢𝐫𝐦 𝐜𝐡𝐚𝐧𝐠𝐢𝐧𝐠 𝐭𝐡𝐞 𝐩𝐫𝐞𝐟𝐢𝐱 𝐢𝐧 𝐲𝐨𝐮𝐫 𝐜𝐡𝐚𝐭 𝐠𝐫𝐨𝐮𝐩.\n"
+				+ "🔄 Please react to this message to confirm changing the prefix in your chat group.\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			successGlobal: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "✅ 𝐒𝐲𝐬𝐭𝐞𝐦 𝐩𝐫𝐞𝐟𝐢𝐱 𝐡𝐚𝐬 𝐛𝐞𝐞𝐧 𝐜𝐡𝐚𝐧𝐠𝐞𝐝 𝐭𝐨: %1\n"
+				+ "✅ System prefix has been changed to: %1\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			successThisThread: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "✅ 𝐂𝐡𝐚𝐭 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱 𝐡𝐚𝐬 𝐛𝐞𝐞𝐧 𝐜𝐡𝐚𝐧𝐠𝐞𝐝 𝐭𝐨: %1\n"
+				+ "✅ Chat group prefix has been changed to: %1\n"
 				+ "━━━━━━━━━━━━━━━━━━━",
 			myPrefix: 
 				"━━━━━━━━━━━━━━━━━━━\n"
-				+ "🌍 𝐒𝐲𝐬𝐭𝐞𝐦 𝐏𝐫𝐞𝐟𝐢𝐱: %1\n"
-				+ "💬 𝐘𝐨𝐮𝐫 𝐆𝐫𝐨𝐮𝐩 𝐏𝐫𝐞𝐟𝐢𝐱: %2\n"
-				+ "⏰ 𝐒𝐞𝐫𝐯𝐞𝐫 𝐓𝐢𝐦𝐞: %3\n"
+				+ "🌍 System Prefix: %1\n"
+				+ "💬 Your Group Prefix: %2\n"
+				+ "⏰ Server Time: %3\n"
 				+ "━━━━━━━━━━━━━━━━━━━\n"
-				+ "💡 𝐓𝐨 𝐮𝐬𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝𝐬, 𝐭𝐲𝐩𝐞 ➜ %2help 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝𝐬!\n"
+				+ "💡 To use commands, type ➜ %2help to see available commands!\n"
 				+ "━━━━━━━━━━━━━━━━━━━"
 		}
 	},
@@ -110,7 +110,10 @@ module.exports = {
 		if (event.body && event.body.toLowerCase() === "prefix") {
 			const serverTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }); 
 			
-			return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID), serverTime));
+			return message.reply({
+				body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID), serverTime),
+				attachment: await global.utils.getStreamFromURL("https://files.catbox.moe/g5gx4h.mp4")
+			});
 		}
 	}
 };
