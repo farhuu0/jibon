@@ -112,7 +112,7 @@ module.exports = {
 			
 			return message.reply({
 				body: getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID), serverTime),
-				attachment: await global.utils.getStreamFromURL("https://files.catbox.moe/g5gx4h.mp4")
+				attachment: await global.utils.getStreamFromURL("https://files.catbox.moe/wc679m.jpg")
 			});
 		}
 	}
