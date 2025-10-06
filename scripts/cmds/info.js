@@ -5,15 +5,15 @@ module.exports = {
   config: {
     name: "info",
     aliases: ["inf", "in4"],
-    version: "2.0",
+    version: "3.6",
     author: "Eren + Modified by Farhan",
     countDown: 5,
     role: 0,
     shortDescription: {
-      en: "Sends information about the bot and admin along with a video."
+      en: "Shows bot and owner info with video."
     },
     longDescription: {
-      en: "Sends information about the bot and admin along with a video."
+      en: "Displays detailed information about the bot and owner, including uptime, ping, social links, and local time."
     },
     category: "Information",
     guide: {
@@ -33,44 +33,65 @@ module.exports = {
 
   sendInfo: async function (message) {
     const botName = "✰→ ғᴀʀʜᴀɴ ʙᴏᴛ ←✰";
-    const authorName = "Fᴀʀʜᴀɴ";
-    const authorFB = "https://www.facebook.com/farhuu.2.0";
-    const authorInsta = "nai";
-    const status = "𝗦𝗶𝗻𝗴𝗹𝗲";
+    const ownerName = "𝐅𝐚𝐫𝐇𝐚𝐧 𝐀𝐇𝐦𝐞𝐝";
+    const moderatedBy = "𝐗𝐨𝐬𝐬 𝐅𝐚𝐫𝐇𝐚𝐧";
+    const religion = "𝐈𝐬𝐥𝐚𝐦";
+    const botStatus = "𝗦𝗶𝗻𝗴𝗹𝗲 💔";
+    const address = "𝐒𝐢𝐫𝐚𝐣𝐠𝐚𝐧𝐣 𝐒𝐚𝐝𝐚𝐫 🏙️";
+    const userClass = "𝐈𝐧𝐭𝐞𝐫 1𝐬𝐭 𝐘𝐞𝐚𝐫 🎓";
+    const facebook = "https://www.facebook.com/farhuu.2.0";
+    const instagram = "https://www.instagram.com/farhuu.2.0";
 
+    // Time setup
     const now = moment().tz('Asia/Dhaka');
-    const time = now.format('h:mm:ss A');
+    const localTime = now.format('hh:mm:ss A');
 
+    // Uptime
     const uptime = process.uptime();
     const seconds = Math.floor(uptime % 60);
     const minutes = Math.floor((uptime / 60) % 60);
     const hours = Math.floor((uptime / (60 * 60)) % 24);
     const uptimeString = `${hours}h ${minutes}m ${seconds}s`;
 
-    const videoUrl = "https://files.catbox.moe/pxuoqo.mp4"; // dont use imgur url for this cmd
+    // Ping
+    const start = Date.now();
+    await new Promise(resolve => setTimeout(resolve, 100));
+    const ping = Date.now() - start;
+
+    const videoUrl = "https://files.catbox.moe/pxuoqo.mp4";
 
     const body = `
-┏━━━━━━━━━━━━━━━┓
-┃ 👑 𝗔𝗱𝗺𝗶𝗻 𝗜𝗻𝗳𝗼
-┃ ✦ Name: ${authorName}
-┃ ✦ Facebook: ${authorFB}
-┃ ✦ Instagram: ${authorInsta}
-┃ ✦ Status: ${status}
-┃
-┃ 🤖 𝗕𝗼𝘁 𝗗𝗲𝘁𝗮𝗶𝗹𝘀
-┃ ✦ Name: ${botName}
-┃ ✦ Time: ${time}
-┃ ✦ Uptime: ${uptimeString}
-┗━━━━━━━━━━━━━━━┛
+╭─ <𝐎𝐖𝐍𝐄𝐑  𝐈𝐍𝐅𝐎> ─╮
+├──────────────⍟
+│ 👑 𝐎𝐰𝐧𝐞𝐫: ${ownerName}
+│ ⚙️ 𝐌𝐨𝐝𝐞𝐫𝐚𝐭𝐞𝐝 𝐛𝐲: ${moderatedBy}
+│ 🏫 𝐂𝐥𝐚𝐬𝐬: ${userClass}
+│ 🏠 𝐀𝐝𝐝𝐫𝐞𝐬𝐬: ${address}
+│ 🌍 𝐑𝐞𝐥𝐢𝐠𝐢𝐨𝐧: ${religion}
+│ 🧬 𝐒𝐭𝐚𝐭𝐮𝐬: ${botStatus}
+│ 📘 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤: ${facebook}
+│ 📸 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦: ${instagram}
+├───────────⍟
+│
+│𖣘 <𝐁𝐎𝐓  𝐈𝐍𝐅𝐎> 𖣘
+├───────────⍟
+│ 🤖 𝐁𝐨𝐭 𝐍𝐚𝐦𝐞: ${botName}
+│ 🕐 𝐓𝐢𝐦𝐞: ${localTime}
+│ 🌀 𝐔𝐩𝐭𝐢𝐦𝐞: ${uptimeString}
+│ ⚡ 𝐏𝐢𝐧𝐠: ${ping}𝐦𝐬
+╰───────────╯
+`;
 
-✨ Stay positive, stay connected.
-I may not be perfect, but I’ll always be here for you ❤️`;
+    try {
+      const response = await axios.get(videoUrl, { responseType: 'stream' });
 
-    const response = await axios.get(videoUrl, { responseType: 'stream' });
-
-    message.reply({
-      body,
-      attachment: response.data
-    });
+      message.reply({
+        body,
+        attachment: response.data
+      });
+    } catch (err) {
+      console.error(err);
+      message.reply("⚠️ Failed to load video.");
+    }
   }
 };
