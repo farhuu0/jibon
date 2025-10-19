@@ -19,13 +19,13 @@ module.exports.onChat = async ({ api, event, args }) => {
         {
           body: 
 `┏━━━✦✗✦━━━┓
- 𝐗𝐎𝐒𝐒 𝐁𝐎𝐓 𝐇𝐞𝐑𝐞  
+ 𝐅𝐚𝐫𝐇𝐚𝐧 𝐁𝐎𝐓 𝐇𝐞𝐑𝐞  
 ┗━━━✦✗✦━━━┛
 > Nickname: - 𝐅𝐚𝐫𝐇𝐮𝐮•-🦈🕸️🫀
 > Owner: -𝐗𝐨𝐬𝐬 - 𝐅𝐚𝐫𝐇𝐚𝐧•-🕷️🕸️🫀 (Etx)
-> 𝐗𝐎𝐒𝐒 𝐁𝐎𝐓__/:;)🤍
+> 𝐅𝐀𝐑𝐇𝐀𝐍 𝐁𝐎𝐓__/:;)🤍
 🦈🫀`,
-          attachment: await global.utils.getStreamFromURL("https://litter.catbox.moe/0zipcrkx7b3aafi4.mp4"),
+          attachment: await global.utils.getStreamFromURL("https://drive.google.com/uc?export=download&id=1_5R93Fri9FaawgqvJvPw70Sy6JsIv1S2"),
         },
         event.threadID,
         event.messageID
