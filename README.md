@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://files.catbox.moe/2qwm2r.mp4">
-    <img src="https://litter.catbox.moe/0qb40aac1jr605tv.jpg" alt="Watch demo video" width="400"/>
+    <img src="https://files.catbox.moe/pg99pj.jpg" alt="Watch demo video" width="400"/>
   </a>
 </p>
 
@@ -52,5 +52,5 @@ Go to [UptimeRobot.com](https://uptimerobot.com) and sign up
 
 ---
 
-> 🤖 **Need help?** Contact MaHi or open an issue in the repo.
+> 🤖 **Need help?** Contact FarHan or open an issue in the repo.
 > 
