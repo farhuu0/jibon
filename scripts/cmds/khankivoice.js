@@ -17,7 +17,7 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args, Users }) {
   if (!event.mentions || Object.keys(event.mentions).length === 0) {
-    return api.sendMessage("কারো মেনশন করো 𝗥𝗮𝗵𝗮𝘁 Boss 🙂", event.threadID, event.messageID);
+    return api.sendMessage("কারো মেনশন করো FarHan Boss 🙂", event.threadID, event.messageID);
   }
 
   try {
