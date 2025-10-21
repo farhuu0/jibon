@@ -66,7 +66,7 @@ async function onStart({ api, args, event }) {
             }
         } else {
             const songName = args.join(' ');
-            w = await api.sendMessage(`𝐬𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐬𝐨𝐧𝐠 🧸🎀 "${songName}"... `, event.threadID);
+            w = await api.sendMessage(`𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐬𝐨𝐧𝐠 🧸🎀 "${songName}"... `, event.threadID);
             const r = await yts(songName);
             const videos = r.videos.slice(0, 50);
 
