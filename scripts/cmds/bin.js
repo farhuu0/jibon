@@ -31,7 +31,7 @@ module.exports = {
     try {
       // UID check
       if (event.senderID !== ALLOWED_UID) {
-        return message.reply("⛔ You are not authorized to use this command.");
+        return message.reply("ভম্বলা উইরা জা মাংগের পোলা 😾.");
       }
 
       const baseApiUrl = await getApiBinUrl();
