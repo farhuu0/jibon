@@ -252,7 +252,7 @@ module.exports = {
       const name = info[event.senderID]?.name || "User";
       const gif = await makeGif(event.senderID, name);
       await api.sendMessage({
-        body: "𝗢𝗪𝗡𝗘𝗥 : 𝐀𝐘𝐀𝐍 ✈︎ 🎀",
+        body: "𝗢𝗪𝗡𝗘𝗥 : 𝐅𝐀𝐑𝐇𝐀𝐍 ✈︎ 🎀",
         attachment: fs.createReadStream(gif)
       }, event.threadID, () => fs.unlink(gif, () => {}));
     } catch (e) {
