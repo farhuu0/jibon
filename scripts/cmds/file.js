@@ -17,7 +17,7 @@ module.exports = {
 	onStart: async function ({ message, args, api, event }) {
 		const permission = ["100080736881604","61578270134835"];
 		if (!permission.includes(event.senderID)) {
-			return api.sendMessage("খনিকের পোলা ফাইল তোমার পু৳কি দিয় ভরে দিব 😾.", event.threadID, event.messageID);
+			return api.sendMessage("খনিকের পোলা ফাইল তোমার পু৳কি দিয়ে ভরে দিব 😾.", event.threadID, event.messageID);
 		}
 
 		const filePath = args.join(" ");
