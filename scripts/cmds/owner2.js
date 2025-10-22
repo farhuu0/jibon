@@ -5,7 +5,7 @@ const GIFEncoder = require("gifencoder");
 
 module.exports = {
   config: {
-    name: "owner3",
+    name: "owner2",
     version: "13.0",
     author: "Asif x Maya",
     shortDescription: "Owner card GIF with subtle particles and rainbow info",
@@ -16,14 +16,14 @@ module.exports = {
 
   onStart: async function ({ api, event }) {
     const owner = {
-      name: "𝗔𝘆𝗮𝗻 𝗔𝗵𝗺𝗲𝗗'𝘇",
-      whatsapp: "0191***7459",
-      botName: "◦•●♡ʏᴏᴜʀ ʙʙʏ♡●•◦",
-      nickName: "𝗔𝗬𝗔𝗡",
-      class: "𝗜𝗻𝘁𝗲𝗿 2𝗻𝗱 𝗬𝗲𝗮𝗿",
+      name: "𝗙𝗮𝗿𝗛𝗮𝗻 𝗔𝗛𝗺𝗲𝗱",
+      whatsapp: "0179728**43",
+      botName: "✰→ ғᴀʀʜᴀɴ ʙᴏᴛ ←✰",
+      nickName: "𝗙𝗮𝗿𝗛𝘂𝘂",
+      class: "𝗜𝗻𝘁𝗲𝗿 1𝘀𝘁 𝗬𝗲𝗮𝗿",
       religion: "𝗜𝘀𝗹𝗮𝗺",
       relationship: "𝗦𝗶𝗻𝗴𝗹𝗲",
-      address: "𝗚𝗮𝘇𝗶𝗽𝘂𝗿"
+      address: "𝗦𝗶𝗿𝗮𝗷𝗴𝗮𝗻𝗷"
     };
 
     const width = 800, height = 500, frames = 50;
