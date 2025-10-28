@@ -47,7 +47,7 @@ module.exports = {
       const buffer = await fs.readFile(photoPath);
       ownerImg = await loadImage(buffer);
     } else {
-      ownerImg = await loadImage("https://files.catbox.moe/j7xeo4.jpg");
+      ownerImg = await loadImage("https://files.catbox.moe/h7yrb9.jpg");
     }
 
     // Pre-generate stars
