@@ -67,7 +67,7 @@ ${e3}━━━━━━━[ 💥 𝗙𝗔𝗥𝗛𝗔𝗡 𝗛𝗢𝗦𝗧 💥 
 `;
 
       // Header image (Logo)
-      const imageUrl = "https://files.catbox.moe/r3tw4i.jpg"; // 👈 এখানে তোমার লোগো ইমেজের লিংক বসাও
+      const imageUrl = "https://drive.google.com/uc?export=download&id=1u5dE6AT6pC6-2p2iiUsNvQDD8XJyqu4W"; // 👈 এখানে তোমার লোগো ইমেজের লিংক বসাও
       const imgPath = path.join(__dirname, "cache", "dashboard_logo.png");
 
       const getImage = (await axios.get(imageUrl, { responseType: "arraybuffer" })).data;
