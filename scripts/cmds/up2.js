@@ -1,119 +1,69 @@
 const os = require("os");
-const { execSync } = require("child_process");
-const { createCanvas } = require("canvas");
-const fs = require("fs");
-const path = require("path");
-
-function formatBytes(bytes) {
- const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
- if (bytes === 0) return "0 Bytes";
- const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
- return (bytes / Math.pow(1024, i)).toFixed(1) + " " + sizes[i];
-}
 
 module.exports = {
- config: {
- name: "up2",
- version: "2.2",
- author: "Chitron Bhattacharjee ✨🌸",
- shortDescription: "Stylized uptime dashboard",
- longDescription: "Lightweight 360p dashboard with fake complex data visuals",
- category: "system",
- guide: "{pn}"
- },
+  config: {
+    name: "up2",
+    version: "4.0-up7",
+    author: "Amit⚡Max | Mod by Xrotick",
+    role: 0,
+    shortDescription: { en: "Stylish uptime with loading animation" },
+    longDescription: {
+      en: "Displays stylish uptime with current time/date and animated loading."
+    },
+    category: "system",
+    guide: { en: "{p}uptime" }
+  },
 
- onStart: async function ({ message, usersData }) {
- try {
- // Stats
- const uptimeSec = process.uptime();
- const h = Math.floor(uptimeSec / 3600);
- const m = Math.floor((uptimeSec % 3600) / 60);
- const s = Math.floor(uptimeSec % 60);
- const uptime = `${h}h ${m}m ${s}s`;
+  onStart: async function ({ api, event }) {
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const loadStages = [
+      "[ █🦆░░░░░░░░░░░░░░ ]",
+      "[ █████🦆░░░░░░░░░░ ]",
+      "[ █████████🦆░░░░░░ ]",
+      "[ █████████████🦆░░ ]",
+      "[ █████████████████ ]"
+    ];
 
- const totalMem = os.totalmem();
- const usedMem = totalMem - os.freemem();
- const memUsage = ((usedMem / totalMem) * 100).toFixed(1);
+    try {
+      const loading = await api.sendMessage("🪐 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐁𝐨𝐭 𝐔𝐩𝐭𝐢𝐦𝐞...\n" + loadStages[0], event.threadID);
 
- let diskUsed = 0, diskTotal = 1;
- try {
- const df = execSync("df -k /").toString().split("\n")[1].split(/\s+/);
- diskUsed = parseInt(df[2]) * 1024;
- diskTotal = parseInt(df[1]) * 1024;
- } catch {}
+      for (let i = 1; i < loadStages.length; i++) {
+        await delay(250);
+        await api.editMessage(`🪐 𝐋𝐨𝐚𝐝𝐢𝐧𝐠 𝐁𝐨𝐭 𝐔𝐩𝐭𝐢𝐦𝐞...\n${loadStages[i]}`, loading.messageID, event.threadID);
+      }
 
- const diskUsage = ((diskUsed / diskTotal) * 100).toFixed(1);
+      const memoryUsage = (process.memoryUsage().rss / 1024 / 1024).toFixed(2);
+      const uptime = process.uptime();
+      const days = Math.floor(uptime / 86400);
+      const hours = Math.floor((uptime % 86400) / 3600);
+      const minutes = Math.floor((uptime % 3600) / 60);
+      const seconds = Math.floor(uptime % 60);
+      const uptimeFormatted = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
- // Canvas 360p
- const canvas = createCanvas(640, 360);
- const ctx = canvas.getContext("2d");
+      const now = new Date().toLocaleString("en-US", {
+        timeZone: "Asia/Dhaka",
+        hour12: true
+      });
+      const [date, time] = now.split(", ");
 
- // Background
- ctx.fillStyle = "#0f172a";
- ctx.fillRect(0, 0, 640, 360);
+      const finalMessage = `
+🦆 𝐁𝐎𝐓 𝐔𝐏𝐓𝐈𝐌𝐄 𝐒𝐓𝐀𝐓𝐒 🦆
 
- // Title
- ctx.fillStyle = "#22c55e";
- ctx.font = "18px sans-serif";
- ctx.fillText("BOT UPTIME DASHBOARD", 20, 30);
+🕰️ ᴜᴘᴛɪᴍᴇ: ${uptimeFormatted}
+🦆 ᴛɪᴍᴇ: ${time}
+📆 ᴅᴀᴛᴇ: ${date}
 
- ctx.fillStyle = "#fff";
- ctx.font = "14px monospace";
- ctx.fillText(`Uptime: ${uptime}`, 20, 60);
- ctx.fillText(`Users: ${(await usersData.getAll()).length}`, 20, 80);
+💾 ʀᴀᴍ ᴜꜱᴀɢᴇ: ${memoryUsage} MB
+🖥️ ᴏꜱ: ${os.platform()} (${os.arch()})
+🛠️ ɴᴏᴅᴇ: ${process.version}
+      `.trim();
 
- // Memory bar
- ctx.fillStyle = "#1e293b";
- ctx.fillRect(20, 140, 200, 15);
- ctx.fillStyle = "#38bdf8";
- ctx.fillRect(20, 140, 2 * memUsage, 15);
- ctx.fillStyle = "#fff";
- ctx.fillText(`RAM: ${memUsage}% (${formatBytes(usedMem)}/${formatBytes(totalMem)})`, 230, 152);
+      await delay(300);
+      await api.editMessage(finalMessage, loading.messageID, event.threadID);
 
- // Disk bar
- ctx.fillStyle = "#1e293b";
- ctx.fillRect(20, 180, 200, 15);
- ctx.fillStyle = "#facc15";
- ctx.fillRect(20, 180, 2 * diskUsage, 15);
- ctx.fillStyle = "#fff";
- ctx.fillText(`Disk: ${diskUsage}% (${formatBytes(diskUsed)}/${formatBytes(diskTotal)})`, 230, 192);
-
- // Fake complex graph lines
- ctx.strokeStyle = "#9333ea";
- ctx.beginPath();
- ctx.moveTo(20, 250);
- for (let x = 20; x < 600; x += 20) {
- const y = 250 - Math.sin(x / 20) * (Math.random() * 20 + 10);
- ctx.lineTo(x, y);
- }
- ctx.stroke();
-
- // Random scatter dots
- ctx.fillStyle = "#facc15";
- for (let i = 0; i < 15; i++) {
- ctx.beginPath();
- ctx.arc(Math.random() * 600 + 20, Math.random() * 80 + 260, 3, 0, Math.PI * 2);
- ctx.fill();
- }
-
- // Author name bottom right
- ctx.fillStyle = "#22c55e";
- ctx.font = "12px sans-serif";
- ctx.textAlign = "right";
- ctx.fillText("FARHAN HOST ✨🌸", 620, 350);
-
- // Save image
- const filePath = path.join(__dirname, "uptime_dashboard.png");
- fs.writeFileSync(filePath, canvas.toBuffer("image/png"));
-
- message.reply({
- body: "📊 | Stylized Uptime Dashboard",
- attachment: fs.createReadStream(filePath)
- });
-
- } catch (err) {
- console.error(err);
- message.reply("❌ | Failed to generate stylized uptime dashboard.");
- }
- }
+    } catch (err) {
+      console.error("Uptime error:", err);
+      api.sendMessage("🦆 Ping problem, wait a moment and try again.", event.threadID);
+    }
+  }
 };
