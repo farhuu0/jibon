@@ -9,8 +9,8 @@ if (!fs.existsSync(USAGE_LOG)) fs.writeFileSync(USAGE_LOG, "{}");
 
 module.exports = {
   config: {
-    name: "midjourney",
-    aliases: ["midj", "mj"],
+    name: "middjourney",
+    aliases: ["midj", "mjj"],
     author: "Mahi--",
     version: "1.0",
     role: 0,
