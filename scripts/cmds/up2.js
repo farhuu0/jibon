@@ -444,7 +444,7 @@ async function createUptimeCard(botUptime, systemUptime, cpuUsage, memoryUsage, 
 
 module.exports = {
         config: {
-                name: "uptime",
+                name: "up2",
                 version: "1.0.0",
                 author: "NeoKEX",
                 countDown: 10,
