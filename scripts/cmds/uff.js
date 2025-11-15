@@ -21,7 +21,7 @@ module.exports = {
     author: "Vex_Kshitiz",
     version: "1.0",
     cooldowns: 5,
-    role: 0,
+    role: 2,
     shortDescription: "18+ TikTok video",
     longDescription: "18+ TikTok video",
     category: "18+",
@@ -35,7 +35,7 @@ module.exports = {
     const adminIDs = threadInfo.adminIDs.map(admin => admin.id);
 
     if (!adminIDs.includes(event.senderID)) {
-      return api.sendMessage("❌ শুধু গ্রুপ অ্যাডমিনরা এই কমান্ড ব্যবহার করতে পারবে!", event.threadID, event.messageID);
+      return api.sendMessage("❌ তোর এইটা দেখার বয়স হয়নি!", event.threadID, event.messageID);
     }
 
     // Author check
