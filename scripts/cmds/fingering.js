@@ -8,7 +8,7 @@ module.exports = {
     name: "fingering",
     aliases: ["fg"],
     version: "1.1",
-    author: "Jun",
+    author: "SaGor",
     countDown: 5,
     role: 2,
     shortDescription: "fingering",
@@ -22,7 +22,7 @@ module.exports = {
     try {
       if (!fs.existsSync(pathImg)) {
         const response = await axios.get(
-          "https://drive.google.com/uc?export=download&id=1HEIUVZXrUgxbJOCkr7h6c9_eeyGgzr3V",
+          "https://drive.google.com/uc?export=download&id=1on5JccgVDnOwCr84Tw5HeX7z1ltnfj2I",
           { responseType: "arraybuffer" }
         );
         fs.writeFileSync(pathImg, Buffer.from(response.data));
