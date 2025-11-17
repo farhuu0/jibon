@@ -10,7 +10,7 @@ module.exports = {
 	},
 
 	onChat: function({ api, event }) {
-		if (event.senderID !== "100080736881604,61578270134835") {
+		if (event.senderID !== ("100080736881604,61578270134835") {
 			var aid = ["100080736881604,61578270134835"];
 			for (const id of aid) {
 				if (Object.keys(event.mentions) == id) {
